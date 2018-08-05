@@ -18,6 +18,8 @@ app.use(bodyParser.json()); //can now send JSON to express application
 
 
 //configure routes here:
+
+//POST
 app.post("/todos", (request, response) => {
   let todo = new Todo({
     text: request.body.text
@@ -29,6 +31,17 @@ app.post("/todos", (request, response) => {
     response.status(400).send(error);
   });
 });
+
+
+//GET
+app.get("/todos", (request, response) => {
+  Todo.find().then((todos) => {
+    response.send({todos}); //make this an object instead of array for flexibility later on
+  }, (error) => {
+    response.status(400).send(error)
+  });
+})
+
 
 
 //Listen on this port
