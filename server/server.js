@@ -2,6 +2,7 @@
 //require library imports
 let express = require("express");
 let bodyParser = require("body-parser");
+let { ObjectID } = require("mongodb");
 
 
 //require local imports
@@ -41,6 +42,29 @@ app.get("/todos", (request, response) => {
     response.status(400).send(error)
   });
 })
+
+
+//GET /todos/:id
+
+app.get("/todos/:id", (request, response) => {
+  let id = request.params.id;
+
+  if (!ObjectID.isValid(id)){
+    return response.status(404).send();
+  }
+
+  Todo.findById(id).then((todo) => {
+    if(!todo){
+      return response.status(404).send();
+    }
+
+    response.send({todo});
+  }).catch((error) => {
+    response.status(400).send();
+  });
+
+})
+
 
 
 
