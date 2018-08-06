@@ -4,15 +4,17 @@ let express = require("express");
 let bodyParser = require("body-parser");
 let { ObjectID } = require("mongodb");
 
-
 //require local imports
 let { mongoose } = require("./db/mongoose");
 let { Todo } = require("./models/todo");
 let { User } = require("./models/user");
 
 
+
 //Store express application in app
+//configured for heroku
 let app = express();
+const port = process.env.PORT || 3000;
 
 //configure middleware
 app.use(bodyParser.json()); //can now send JSON to express application
@@ -69,8 +71,8 @@ app.get("/todos/:id", (request, response) => {
 
 
 //Listen on this port
-app.listen(3000, () => {
-  console.log("Started on port 3000")
+app.listen(port, () => {
+  console.log(`Started on port ${port}`);
 });
 
 module.exports = { app };
