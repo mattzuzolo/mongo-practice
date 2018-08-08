@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const AnnotationSchema = require("./annotation");
 
 const PersonSchema = new Schema({
   name: String,
-  // annotation: [AnnotationSchema],
+  password: String,
+  favoriteWorks: [],
 });
 
 const Person = mongoose.model("person", PersonSchema);

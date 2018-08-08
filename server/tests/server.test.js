@@ -7,18 +7,24 @@ const { Person } = require("./../models/person");
 const { Annotation } = require("./../models/annotation");
 
 
+
 const seedPerson = [{
   _id: new ObjectID(),
-  name: "Matt"
+  name: "Matt",
+  password: "the best password ever",
+  favoriteWorks: ["a", "b", "c"]
 },{
   _id: new ObjectID(),
-  name: "Kayla"
+  name: "Kayla",
+  password: "password"
 },{
   _id: new ObjectID(),
-  name: "David"
+  name: "David",
+  password: "DavidT"
 },{
   _id: new ObjectID(),
-  name: "Jordan"
+  name: "Jordan",
+  password: "12345"
 }];
 
 const seedArtwork = [{
@@ -45,25 +51,122 @@ const seedArtwork = [{
 
 const seedAnnotation = [{
   _id: new ObjectID(),
-  title: "Title of annotation #0",
-  body: "Body of annotation #0",
+  title: "Pedestrian at Best.",
+  body: "I could totally paint this. Why is it in a museum?",
+  person: seedPerson[0],
+  artwork: seedArtwork[0],
+},{
+  _id: new ObjectID(),
+  title: "Pretty meh",
+  body: "It could be better. I prefer Banksy. That's real art.",
+  person: seedPerson[0],
+  artwork: seedArtwork[1],
+},{
+  _id: new ObjectID(),
+  title: "cool.",
+  body: "jk lame.",
+  person: seedPerson[1],
+  artwork: seedArtwork[0],
+},{
+  _id: new ObjectID(),
+  title: "One of his best works",
+  body: "Love it.",
+  person: seedPerson[3],
+  artwork: seedArtwork[2],
+},{
+  _id: new ObjectID(),
+  title: "Another title here",
+  body: "Love it.",
+  person: seedPerson[3],
+  artwork: seedArtwork[2],
+},{
+  _id: new ObjectID(),
+  title: "Terrible.",
+  body: "Love it.",
+  person: seedPerson[3],
+  artwork: seedArtwork[2],
+},{
+  _id: new ObjectID(),
+  title: "Overrated.",
+  body: "Love it.",
+  person: seedPerson[3],
+  artwork: seedArtwork[3],
+},{
+  _id: new ObjectID(),
+  title: "Really? I could paint this.",
+  body: "Love it.",
+  person: seedPerson[3],
+  artwork: seedArtwork[1],
+}];
+
+const seedComment = [{
+  _id: new ObjectID(),
+  content: "You are the worst.",
   person: seedPerson[0],
 },{
   _id: new ObjectID(),
-  title: "Title of annotation #1",
-  body: "Body of annotation #1",
+  content: "Delete your account",
   person: seedPerson[0],
 },{
   _id: new ObjectID(),
-  title: "Title of annotation #2",
-  body: "Body of annotation #2",
+  content: "lol",
+  person: seedPerson[0],
+},{
+  _id: new ObjectID(),
+  content: "<comment unrelated to this annotation, for some reason.",
   person: seedPerson[1],
 },{
   _id: new ObjectID(),
-  title: "Title of annotation #3",
-  body: "Body of annotation #3",
+  content: "<comment unrelated to this annotation, for some reason.",
+  person: seedPerson[1],
+},{
+  _id: new ObjectID(),
+  content: "<comment unrelated to this annotation, for some reason.",
+  person: seedPerson[3],
+},{
+  _id: new ObjectID(),
+  content: "<comment unrelated to this annotation, for some reason.",
   person: seedPerson[3],
 }];
+
+
+describe("Seeding", () => {
+
+  it("should create a new instance of person", function() {
+    console.log(seedPerson)
+    expect(seedPerson[0].name).toBe("Matt");
+  })
+
+  xit("should create a new instance of annotation", function() {
+    console.log(seedAnnotation)
+    expect(seedAnnotation[0].title).toBe("Pedestrian at Best.");
+    expect(seedAnnotation[0].body).toBe("I could totally paint this. Why is it in a museum?");
+  })
+
+});
+
+describe("Building relationships", () => {
+
+  xit("should add a person to each annotation", function() {
+    console.log(seedAnnotation)
+    expect(seedAnnotation[1].person).toBe(seedPerson[0]);
+    expect(seedAnnotation[3].person).toBe(seedPerson[3]);
+  })
+
+  xit("should add a work to each annotation", function() {
+    console.log(seedAnnotation)
+    expect(seedAnnotation[0].artwork).toBe(seedArtwork[0]);
+    expect(seedAnnotation[3].artwork).toBe(seedArtwork[2]);
+  })
+
+  xit("should add a person to a comment", function() {
+    console.log(seedAnnotation)
+    expect(seedComment[0].person).toBe(seedPerson[0]);
+    expect(seedComment[3].person).toBe(seedPerson[1]);
+    expect(seedComment[5].person).toBe(seedPerson[3]);
+  })
+
+});
 
 
 //add seed data for testing
@@ -75,37 +178,8 @@ const seedAnnotation = [{
 //   text: "Second test todo"
 // }];
 
-//testing lifecycle method
-// beforeEach((done) => {
-//   Person.remove({}).then(() => {
-//     Person.insertMany(seedPerson);
-//   }).then(() => done());
-// });
 
-describe("Seeding", () => {
 
-  it("should create a new instance of person", function() {
-    console.log(seedPerson)
-    expect(seedPerson[0].name).toBe("Matt");
-  })
-
-  it("should create a new instance of annotation", function() {
-    console.log(seedAnnotation)
-    expect(seedAnnotation[0].title).toBe("Title of annotation #0");
-    expect(seedAnnotation[0].body).toBe("Body of annotation #0");
-  })
-
-});
-
-describe("Building relationships", () => {
-
-  it("should add a person to each annotation", function() {
-    console.log(seedAnnotation)
-    expect(seedAnnotation[1].person).toBe(seedPerson[0]);
-    expect(seedAnnotation[3].person).toBe(seedPerson[3]);
-  })
-
-});
 
 //
 // describe("POST /todos", () => {
